@@ -2,7 +2,7 @@
 
 Interface moderna e interativa de e-commerce para venda de chaves digitais de jogos (PC e Consoles), desenvolvida com **HTML5, CSS3 e JavaScript puro (Vanilla JS)** sem dependências externas.
 
-🔗 **Demo ao vivo:** `https://sammybe4r.github.io/kinetic-game-store/` *(atualize após ativar o GitHub Pages)*
+🔗 **Demo ao vivo:** `https://sammybe4r.github.io/kinetic-game-store/` 
 
 ---
 
