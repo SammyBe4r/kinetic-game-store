@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="kinetic">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KINETIC.GG — Loja de Jogos Digitais | Samuel Oliveira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06070c;
+      --surface: #0d101b;
+      --surface-2: #14192b;
+      --surface-3: #1b2238;
+      --border: rgba(255, 255, 255, 0.08);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      /* Tema Assinatura: Roxo Elétrico + Verde Neon */
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --on-primary: #ffffff;
+      --primary-soft: rgba(139, 92, 246, 0.16);
+      --primary-glow: rgba(139, 92, 246, 0.38);
+      --accent: #34d399;
+      --accent-soft: rgba(52, 211, 153, 0.14);
+      --accent-border: rgba(52, 211, 153, 0.35);
+    }
+
+    [data-theme="gold"] {
+      --primary: #eab308;
+      --primary-hover: #ca8a04;
+      --on-primary: #09090b;
+      --primary-soft: rgba(234, 179, 8, 0.16);
+      --primary-glow: rgba(234, 179, 8, 0.32);
+      --accent: #fde047;
+      --accent-soft: rgba(253, 224, 71, 0.14);
+      --accent-border: rgba(253, 224, 71, 0.35);
+    }
+
+    [data-theme="indigo"] {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --on-primary: #ffffff;
+      --primary-soft: rgba(99, 102, 241, 0.16);
+      --primary-glow: rgba(99, 102, 241, 0.35);
+      --accent: #22d3ee;
+      --accent-soft: rgba(34, 211, 238, 0.14);
+      --accent-border: rgba(34, 211, 238, 0.32);
+    }
+
+    [data-theme="crimson"] {
+      --primary: #f43f5e;
+      --primary-hover: #e11d48;
+      --on-primary: #ffffff;
+      --primary-soft: rgba(244, 63, 94, 0.16);
+      --primary-glow: rgba(244, 63, 94, 0.35);
+      --accent: #fb923c;
+      --accent-soft: rgba(251, 146, 60, 0.14);
+      --accent-border: rgba(251, 146, 60, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: linear-gradient(90deg, var(--surface-2), var(--surface-3), var(--surface-2));
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.45rem 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .top-bar code {
+      background: var(--primary-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      padding: 0.08rem 0.45rem;
+      border-radius: 5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(6, 7, 12, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--on-primary);
+      box-shadow: 0 4px 16px var(--primary-glow);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .logo-sub {
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: var(--accent);
+      display: block;
+      letter-spacing: 0.4px;
+      margin-top: -2px;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      max-width: 420px;
+      position: relative;
+    }
+
+    .search-wrapper svg {
+      position: absolute;
+      left: 0.95rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      pointer-events: none;
+    }
+
+    .search-wrapper input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.62rem 2.8rem 0.62rem 2.6rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-wrapper input:focus {
+      border-color: var(--primary);
+      background: var(--surface-2);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    .kbd-hint {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 0.1rem 0.4rem;
+      border-radius: 5px;
+      pointer-events: none;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .theme-switcher {
+      display: flex;
+      align-items: center;
+      gap: 0.38rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.42rem 0.58rem;
+      border-radius: 10px;
+    }
+
+    .theme-dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .theme-dot:hover { transform: scale(1.15); }
+    .theme-dot.active { border-color: #fff; transform: scale(1.15); }
+
+    .icon-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.55rem 0.85rem;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--surface-2);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .icon-btn.active {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .badge {
+      background: var(--primary);
+      color: var(--on-primary);
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.08rem 0.42rem;
+      border-radius: 999px;
+      min-width: 19px;
+      text-align: center;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem;
+    }
+
+    /* Hero Spotlight */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-spotlight {
+      position: relative;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      min-height: 365px;
+      display: flex;
+      align-items: flex-end;
+      padding: 2.25rem;
+      background: var(--surface);
+    }
+
+    .hero-bg-art {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      transition: background 0.5s ease;
+    }
+
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
+      z-index: 1;
+    }
+
+    .hero-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(6, 7, 12, 0.96) 0%, rgba(6, 7, 12, 0.74) 58%, rgba(6, 7, 12, 0.25) 100%);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 580px;
+      animation: fadeUp 0.35s ease;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.24rem 0.62rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pill-accent {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+    }
+
+    .pill-rating {
+      background: rgba(245, 158, 11, 0.14);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .hero-content h1 {
+      font-size: clamp(1.75rem, 3.2vw, 2.55rem);
+      font-weight: 800;
+      line-height: 1.12;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-content p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      margin-bottom: 1.45rem;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      border: none;
+      padding: 0.75rem 1.4rem;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
+
+    .hero-side-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .hero-side-item {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .hero-side-item:hover { background: var(--surface-2); }
+    .hero-side-item.active {
+      background: var(--surface-2);
+      border-color: var(--primary);
+      box-shadow: inset 3px 0 0 var(--primary);
+    }
+
+    .hero-side-thumb {
+      width: 48px;
+      height: 58px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .hero-side-info h4 { font-size: 0.86rem; font-weight: 700; margin-bottom: 0.18rem; }
+    .hero-side-info span { font-size: 0.78rem; color: var(--accent); font-weight: 700; }
+
+    /* Trust Bar */
+    .trust-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .trust-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .trust-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .trust-item h5 { font-size: 0.84rem; font-weight: 700; }
+    .trust-item p { font-size: 0.74rem; color: var(--text-muted); }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filter-pills { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover { color: var(--text); background: var(--surface-2); }
+    .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+      font-weight: 700;
+    }
+
+    .toolbar-selects { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+
+    .select-input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.48rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Games Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+      gap: 1.35rem;
+    }
+
+    .game-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: fadeUp 0.35s ease backwards;
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.48);
+    }
+
+    .card-cover {
+      height: 175px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0.85rem;
+    }
+
+    .card-cover-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.16;
+      background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.45) 1px, transparent 0);
+      background-size: 16px 16px;
+    }
+
+    .card-cover-emblem {
+      position: absolute;
+      right: -12px;
+      bottom: -16px;
+      opacity: 0.22;
+      transform: rotate(-10deg);
+      pointer-events: none;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .game-card:hover .card-cover-emblem {
+      transform: rotate(-4deg) scale(1.06);
+      opacity: 0.32;
+    }
+
+    .card-cover-top, .card-cover-bottom {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .fav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(6, 7, 12, 0.65);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .fav-btn:hover, .fav-btn.active {
+      color: #f43f5e;
+      border-color: rgba(244, 63, 94, 0.4);
+      background: rgba(244, 63, 94, 0.15);
+    }
+
+    .discount-tag {
+      background: var(--success);
+      color: #022c22;
+      font-weight: 800;
+      font-size: 0.74rem;
+      padding: 0.22rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    .platform-pill {
+      background: rgba(6, 7, 12, 0.78);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      color: #e2e8f0;
+    }
+
+    .rating-pill {
+      background: rgba(6, 7, 12, 0.78);
+      backdrop-filter: blur(6px);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      color: #fbbf24;
+    }
+
+    .card-body {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.71rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-meta .cat { color: var(--accent); }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .card-title:hover { color: var(--accent); }
+
+    .tag-row {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.9rem;
+    }
+
+    .mini-tag {
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 0.14rem 0.45rem;
+      border-radius: 5px;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .price-stack { display: flex; flex-direction: column; }
+    .price-old { font-size: 0.74rem; color: var(--text-dim); text-decoration: line-through; }
+    .price-now { font-size: 1.16rem; font-weight: 800; color: #fff; }
+
+    .add-cart-btn {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 0.52rem 0.9rem;
+      border-radius: 9px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .add-cart-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    /* Overlay, Drawer & Modals */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 5, 10, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: none;
+    }
+    .overlay.open { display: block; }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -440px;
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 210;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 1.25rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .close-btn:hover { color: #fff; background: var(--surface-3); }
+
+    .cart-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .cart-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .cart-thumb {
+      width: 48px;
+      height: 54px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.88rem;
+    }
+
+    .cart-info { flex: 1; min-width: 0; }
+    .cart-info h4 { font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-info .edition-label { font-size: 0.72rem; color: var(--text-dim); display: block; }
+    .cart-info .cart-price { font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+
+    .qty-box { display: flex; align-items: center; gap: 0.35rem; }
+    .qty-btn {
+      width: 26px; height: 26px; border-radius: 6px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      color: #fff; cursor: pointer;
+    }
+
+    .drawer-footer {
+      padding: 1.25rem 1.4rem;
+      border-top: 1px solid var(--border);
+      background: rgba(6, 7, 12, 0.6);
+    }
+
+    .coupon-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .coupon-row input {
+      flex: 1; background: var(--bg); border: 1px solid var(--border);
+      color: #fff; padding: 0.55rem 0.8rem; border-radius: 8px;
+      font-size: 0.82rem; outline: none; text-transform: uppercase;
+    }
+    .coupon-row button {
+      background: var(--surface-3); color: var(--accent);
+      border: 1px solid var(--accent-border); padding: 0 0.9rem;
+      border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer;
+    }
+
+    .summary-line { display: flex; justify-content: space-between; font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.35rem; }
+    .summary-total {
+      display: flex; justify-content: space-between; font-size: 1.15rem; font-weight: 800;
+      margin: 0.75rem 0 1rem; padding-top: 0.65rem; border-top: 1px solid var(--border);
+    }
+
+    /* Modals */
+    .modal {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -48%) scale(0.96);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 94%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      z-index: 220;
+      display: none;
+      opacity: 0;
+      transition: all 0.2s ease;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75);
+    }
+    .modal.open { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .modal-body { padding: 1.65rem; }
+
+    .edition-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0; }
+    .edition-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.85rem; cursor: pointer; transition: all 0.2s;
+    }
+    .edition-card.selected { border-color: var(--primary); background: var(--primary-soft); }
+
+    .specs-box {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1rem; margin: 1rem 0 1.25rem; font-size: 0.8rem; color: var(--text-muted);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;
+    }
+
+    .form-group { margin-bottom: 0.85rem; }
+    .form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .form-group input {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      color: #fff; padding: 0.6rem 0.85rem; border-radius: 9px; font-size: 0.86rem; outline: none;
+    }
+    .form-group input:focus { border-color: var(--primary); }
+
+    .payment-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 1rem; }
+    .pay-tab {
+      background: var(--bg); border: 1px solid var(--border); color: var(--text-muted);
+      padding: 0.7rem; border-radius: 10px; font-weight: 600; font-size: 0.85rem;
+      cursor: pointer; text-align: center;
+    }
+    .pay-tab.active { border-color: var(--primary); background: var(--primary-soft); color: #fff; }
+
+    .key-card {
+      background: var(--bg); border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 10px; padding: 0.85rem 1rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.65rem;
+    }
+    .key-code { font-family: 'JetBrains Mono', monospace; color: var(--success); font-weight: 700; font-size: 0.9rem; }
+    .copy-btn {
+      background: var(--surface-2); border: 1px solid var(--border);
+      color: #fff; padding: 0.35rem 0.65rem; border-radius: 6px;
+      font-size: 0.75rem; font-weight: 600; cursor: pointer;
+    }
+
+    /* Portfolio Case Study */
+    .dev-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.15rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.15rem;
+    }
+    .dev-avatar {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1rem; color: var(--on-primary);
+    }
+    .tech-stack-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin: 1rem 0 1.25rem;
+    }
+    .tech-item {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.8rem; font-size: 0.79rem; color: var(--text-muted);
+    }
+    .tech-item strong { display: block; color: var(--accent); margin-bottom: 0.2rem; font-size: 0.83rem; }
+
+    /* Footer */
+    footer {
+      margin-top: 4.5rem;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 2rem;
+    }
+
+    .footer-col h4 { font-size: 0.9rem; margin-bottom: 0.9rem; color: #fff; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-col li, .footer-col p { font-size: 0.82rem; color: var(--text-muted); }
+    .footer-link { cursor: pointer; transition: color 0.15s; text-decoration: none; color: var(--text-muted); }
+    .footer-link:hover { color: var(--accent); }
+
+    .pay-badges { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+    .pay-badge {
+      background: var(--bg); border: 1px solid var(--border);
+      padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.72rem;
+      font-weight: 700; color: var(--text-muted);
+    }
+
+    .footer-bottom {
+      max-width: 1380px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--surface-3);
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 0.7rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s;
+      z-index: 300;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-side-list { flex-direction: row; overflow-x: auto; }
+      .hero-side-item { min-width: 220px; }
+      .trust-bar { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .header-inner { flex-wrap: wrap; }
+      .search-wrapper { order: 3; max-width: 100%; flex-basis: 100%; }
+      .trust-bar, .edition-grid, .specs-box, .footer-inner, .tech-stack-grid { grid-template-columns: 1fr; }
+      .icon-btn span.btn-label { display: none; }
+      .theme-switcher { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <span>ENTREGA DIGITAL IMEDIATA • Use o cupom <code>KINETIC10</code> no carrinho para ganhar 10% OFF</span>
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo" onclick="resetAll()">
+        <div class="logo-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path d="M6 12h4m-2-2v4m7-1h.01M18 11h.01M5 7h14a3 3 0 0 1 3 3v4a5 5 0 0 1-5 5h-1.5a2 2 0 0 1-1.6-.8l-1-1.33a1 1 0 0 0-1.8 0l-1 1.33a2 2 0 0 1-1.6.8H7a5 5 0 0 1-5-5v-4a3 3 0 0 1 3-3Z"/></svg>
+        </div>
+        <div>
+          <span id="brandTitle">KINETIC.GG</span>
+          <span class="logo-sub" id="brandSub">por Samuel Oliveira</span>
+        </div>
+      </div>
+
+      <div class="search-wrapper">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="searchInput" placeholder="Buscar jogos, estúdios ou tags..." oninput="renderGames()" />
+        <span class="kbd-hint">/</span>
+      </div>
+
+      <div class="header-actions">
+        <div class="theme-switcher" title="Alternar paleta de cores">
+          <button class="theme-dot active" data-set-theme="kinetic" style="background: linear-gradient(135deg,#8b5cf6,#34d399);" onclick="setTheme('kinetic')" aria-label="Tema Roxo e Verde"></button>
+          <button class="theme-dot" data-set-theme="gold" style="background: linear-gradient(135deg,#eab308,#fde047);" onclick="setTheme('gold')" aria-label="Tema Preto e Dourado"></button>
+          <button class="theme-dot" data-set-theme="indigo" style="background: linear-gradient(135deg,#6366f1,#22d3ee);" onclick="setTheme('indigo')" aria-label="Tema Indigo"></button>
+          <button class="theme-dot" data-set-theme="crimson" style="background: linear-gradient(135deg,#f43f5e,#fb923c);" onclick="setTheme('crimson')" aria-label="Tema Crimson"></button>
+        </div>
+
+        <button class="icon-btn" onclick="openAboutModal()" title="Sobre o Projeto & Contato">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span class="btn-label">Case Study</span>
+        </button>
+
+        <button class="icon-btn" id="favFilterBtn" onclick="toggleWishlistFilter()" title="Favoritos">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <span class="badge" id="favCount">0</span>
+        </button>
+
+        <button class="icon-btn" onclick="openKeysModal()" title="Minhas Chaves">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4m2-2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/></svg>
+          <span class="badge" id="keysCount">0</span>
+        </button>
+
+        <button class="icon-btn" onclick="toggleCart(true)" style="border-color: var(--primary);">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span class="btn-label">Carrinho</span>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero-grid">
+      <div class="hero-spotlight" onmouseenter="pauseHero()" onmouseleave="resumeHero()">
+        <div class="hero-bg-art" id="heroBg"></div>
+        <div class="hero-bg-grid"></div>
+        <div class="hero-scrim"></div>
+        <div class="hero-content" id="heroContent"></div>
+      </div>
+      <div class="hero-side-list" id="heroSideList"></div>
+    </section>
+
+    <section class="trust-bar">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div>
+          <h5>Entrega Instantânea</h5>
+          <p>Chaves geradas na hora no checkout</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div>
+          <h5>Chaves Oficiais</h5>
+          <p>Steam, Epic, PlayStation, Xbox e Switch</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        </div>
+        <div>
+          <h5>Pix ou 6x Sem Juros</h5>
+          <p>Fluxo completo de pagamento simulado</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div>
+          <h5>Zero Dependências</h5>
+          <p>HTML5, CSS3 & Vanilla JS puro</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalog">
+      <div class="toolbar">
+        <div class="filter-pills">
+          <button class="filter-btn active" onclick="setCategory('Todos', this)">Todos</button>
+          <button class="filter-btn" onclick="setCategory('RPG', this)">RPG</button>
+          <button class="filter-btn" onclick="setCategory('Ação', this)">Ação</button>
+          <button class="filter-btn" onclick="setCategory('Aventura', this)">Aventura</button>
+          <button class="filter-btn" onclick="setCategory('Estratégia', this)">Estratégia</button>
+          <button class="filter-btn" onclick="setCategory('Indie', this)">Indie</button>
+        </div>
+
+        <div class="toolbar-selects">
+          <select class="select-input" id="platformFilter" onchange="renderGames()">
+            <option value="Todas">Plataforma: Todas</option>
+            <option value="Steam">PC (Steam)</option>
+            <option value="Epic">PC (Epic)</option>
+            <option value="PS5">PlayStation 5</option>
+            <option value="Xbox">Xbox Series</option>
+            <option value="Switch">Nintendo Switch</option>
+          </select>
+
+          <select class="select-input" id="sortSelect" onchange="renderGames()">
+            <option value="featured">Ordenar: Destaques</option>
+            <option value="price-asc">Menor Preço</option>
+            <option value="price-desc">Maior Preço</option>
+            <option value="discount">Maior Desconto</option>
+            <option value="rating">Melhor Avaliação</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="games-grid" id="gamesGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom: 0.75rem;">
+          <div class="logo-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path d="M6 12h4m-2-2v4m7-1h.01M18 11h.01M5 7h14a3 3 0 0 1 3 3v4a5 5 0 0 1-5 5h-1.5a2 2 0 0 1-1.6-.8l-1-1.33a1 1 0 0 0-1.8 0l-1 1.33a2 2 0 0 1-1.6.8H7a5 5 0 0 1-5-5v-4a3 3 0 0 1 3-3Z"/></svg>
+          </div>
+          <span id="footerBrand">KINETIC.GG</span>
+        </div>
+        <p>E-commerce de jogos digitais desenvolvido por Samuel Oliveira com foco em UX, performance e gerenciamento de estado no cliente.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li class="footer-link" onclick="resetAll()">Catálogo Completo</li>
+          <li class="footer-link" onclick="openKeysModal()">Minhas Chaves</li>
+          <li class="footer-link" onclick="toggleCart(true)">Abrir Carrinho</li>
+          <li class="footer-link" onclick="openAboutModal()">Case Study do Projeto</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Desenvolvedor</h4>
+        <ul id="footerDevLinks"></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Meios Simulados</h4>
+        <div class="pay-badges">
+          <span class="pay-badge">PIX</span>
+          <span class="pay-badge">VISA</span>
+          <span class="pay-badge">MASTERCARD</span>
+          <span class="pay-badge">ELO</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footerCopy">© 2026 KINETIC.GG — Desenvolvido por Samuel Oliveira</span>
+      <span class="footer-link" onclick="openAboutModal()">Ver Arquitetura do Projeto &rarr;</span>
+    </div>
+  </footer>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+  <!-- Cart Drawer -->
+  <aside class="drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3 style="font-size: 1.05rem;">Carrinho de Compras</h3>
+      <button class="close-btn" onclick="toggleCart(false)">&times;</button>
+    </div>
+
+    <div class="cart-body" id="cartBody"></div>
+
+    <div class="drawer-footer">
+      <div class="coupon-row">
+        <input type="text" id="couponInput" placeholder="Cupom (KINETIC10)" />
+        <button onclick="applyCoupon()">Aplicar</button>
+      </div>
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <span id="subtotalText">R$ 0,00</span>
+      </div>
+      <div class="summary-line" id="discountRow" style="display: none; color: var(--success);">
+        <span>Desconto Cupom (10%)</span>
+        <span id="discountText">- R$ 0,00</span>
+      </div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span id="totalText">R$ 0,00</span>
+      </div>
+      <button class="btn-primary" style="width: 100%;" onclick="openCheckout()">Prosseguir para Pagamento</button>
+    </div>
+  </aside>
+
+  <!-- Modals -->
+  <div class="modal" id="detailsModal"><div class="modal-body" id="detailsBody"></div></div>
+  <div class="modal" id="checkoutModal" style="max-width: 520px;"><div class="modal-body" id="checkoutBody"></div></div>
+  <div class="modal" id="keysModal" style="max-width: 560px;"><div class="modal-body" id="keysBody"></div></div>
+  <div class="modal" id="aboutModal" style="max-width: 600px;"><div class="modal-body" id="aboutBody"></div></div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const SITE_CONFIG = {
+      storeName: "KINETIC.GG",
+      devName: "Samuel Oliveira",
+      devInitials: "SO",
+      devRole: "Desenvolvedor Front-end",
+      githubUrl: "https://github.com/SammyBe4r",
+      linkedinUrl: "https://www.linkedin.com/in/samuel-oliveira-b21463232/",
+      defaultTheme: "kinetic"
+    };
+
+    const emblems = {
+      cpu: `<svg class="card-cover-emblem" width="115" height="115" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3m6-3v3M9 20v3m6-3v3M20 9h3m-3 5h3M1 9h3m-3 5h3"/></svg>`,
+      sword: `<svg class="card-cover-emblem" width="115" height="115" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14.5 17.5 3 6V3h3l11.5 11.5M13 19l6-6m-3 3 4 4m-1 1 2-2"/></svg>`,
+      wheel: `<svg class="card-cover-emblem" width="115" height="115" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v7m0 6v7M2 12h7m6 0h7"/></svg>`,
+      leaf: `<svg class="card-cover-emblem" width="115" height="115" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`,
+      orbit: `<svg class="card-cover-emblem" width="115" height="115" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2a10 10 0 1 0 10 10"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-30 12 12)"/></svg>`,
+      compass: `<svg class="card-cover-emblem" width="115" height="115" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+      target: `<svg class="card-cover-emblem" width="115" height="115" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+      gem: `<svg class="card-cover-emblem" width="115" height="115" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6M2 9h20"/></svg>`
+    };
+
+    const games = [
+      {
+        id: 1, code: "CO99", emblem: "cpu",
+        title: "Cyber Odyssey 2099", studio: "Vortex Studios",
+        category: "RPG", platform: "Steam", platformLabel: "PC (Steam)",
+        price: 119.90, oldPrice: 249.90, deluxeExtra: 45.00, rating: 4.9, featured: true,
+        tags: ["Dublado PT-BR", "Ray Tracing", "Mundo Aberto"],
+        gradient: "linear-gradient(135deg, #4c1d95 0%, #059669 100%)",
+        description: "Explore a megacidade de Neo-Veridia em um RPG de ação cyberpunk com narrativa ramificada, combate tático e implantes neurais personalizáveis.",
+        specs: { cpu: "Ryzen 5 3600 / i5-10400", gpu: "RTX 3060 8GB", ram: "16 GB RAM", storage: "75 GB SSD" }
+      },
+      {
+        id: 2, code: "ELDR", emblem: "sword",
+        title: "Reinos de Eldoria: Eclipse", studio: "Ironcrown Interactive",
+        category: "RPG", platform: "PS5", platformLabel: "PS5 / Steam",
+        price: 179.90, oldPrice: 299.90, deluxeExtra: 60.00, rating: 4.9, featured: true,
+        tags: ["Co-op Online", "Souls-like", "60 FPS"],
+        gradient: "linear-gradient(135deg, #7f1d1d 0%, #b45309 100%)",
+        description: "Um RPG de fantasia sombria com mundo interconectado, dezenas de classes híbridas, chefões colossais e modo cooperativo online.",
+        specs: { cpu: "Ryzen 5 5600 / i5-11600", gpu: "RTX 3070 / RX 6700 XT", ram: "16 GB RAM", storage: "90 GB SSD" }
+      },
+      {
+        id: 3, code: "APEX", emblem: "wheel",
+        title: "Apex Horizon Motorsport", studio: "Velocity Works",
+        category: "Ação", platform: "Xbox", platformLabel: "Xbox / PC",
+        price: 99.50, oldPrice: 199.00, deluxeExtra: 40.00, rating: 4.7, featured: true,
+        tags: ["Crossplay", "HDR10", "Multiplayer"],
+        gradient: "linear-gradient(135deg, #831843 0%, #4c1d95 100%)",
+        description: "Física de pista de nova geração, mais de 350 carros licenciados e clima dinâmico com suporte completo a volantes e Ray Tracing.",
+        specs: { cpu: "i5-9600K / Ryzen 5 2600", gpu: "GTX 1660 Ti / RX 5600", ram: "16 GB RAM", storage: "85 GB SSD" }
+      },
+      {
+        id: 4, code: "SHDW", emblem: "leaf",
+        title: "Sombras do Vale Dourado", studio: "Lumen Indie Lab",
+        category: "Indie", platform: "Steam", platformLabel: "PC (Steam)",
+        price: 34.90, oldPrice: 59.90, deluxeExtra: 15.00, rating: 4.8, featured: false,
+        tags: ["Singleplayer", "Trilha Premiada", "PT-BR"],
+        gradient: "linear-gradient(135deg, #065f46 0%, #0369a1 100%)",
+        description: "Aventura atmosférica premiada por sua direção de arte minimalista, trilha sonora orquestral e quebra-cabeças ambientais.",
+        specs: { cpu: "Intel i3 / Ryzen 3", gpu: "GTX 1050 4GB", ram: "8 GB RAM", storage: "12 GB" }
+      },
+      {
+        id: 5, code: "STR4", emblem: "orbit",
+        title: "Império Galáctico IV", studio: "Grand Strategy Co.",
+        category: "Estratégia", platform: "Epic", platformLabel: "PC (Epic)",
+        price: 84.00, oldPrice: 140.00, deluxeExtra: 35.00, rating: 4.6, featured: false,
+        tags: ["4X Sci-Fi", "Suporte a Mods", "PT-BR"],
+        gradient: "linear-gradient(135deg, #0f172a 0%, #4338ca 100%)",
+        description: "Estratégia 4X em escala estelar. Gerencie economias planetárias, negocie tratados galácticos e comande armadas em tempo real.",
+        specs: { cpu: "i5-10400 / Ryzen 5 3600", gpu: "GTX 1650", ram: "16 GB RAM", storage: "30 GB SSD" }
+      },
+      {
+        id: 6, code: "ISLA", emblem: "compass",
+        title: "Ecos da Ilha Perdida", studio: "Nautilus Games",
+        category: "Aventura", platform: "PS5", platformLabel: "PS5 / PC",
+        price: 149.90, oldPrice: 249.90, deluxeExtra: 50.00, rating: 4.8, featured: false,
+        tags: ["Narrativa", "Dublado PT-BR", "DualSense"],
+        gradient: "linear-gradient(135deg, #115e59 0%, #3f6212 100%)",
+        description: "Desvende ruínas submersas e templos esquecidos em uma ilha repleta de segredos, escalada livre e combates cinematográficos.",
+        specs: { cpu: "i5-10600K / Ryzen 5 3600X", gpu: "RTX 2060 Super", ram: "16 GB RAM", storage: "65 GB SSD" }
+      },
+      {
+        id: 7, code: "ZERO", emblem: "target",
+        title: "Operação Tática: Zero", studio: "BlackOps Forge",
+        category: "Ação", platform: "Steam", platformLabel: "PC (Steam)",
+        price: 69.90, oldPrice: 139.90, deluxeExtra: 30.00, rating: 4.5, featured: false,
+        tags: ["FPS Tático", "Co-op 4P", "Servidores BR"],
+        gradient: "linear-gradient(135deg, #1e293b 0%, #991b1b 100%)",
+        description: "Shooter tático cooperativo para até 4 jogadores com balística realista, personalização profunda de armas e missões noturnas.",
+        specs: { cpu: "i5-8400 / Ryzen 5 2600", gpu: "GTX 1660", ram: "12 GB RAM", storage: "45 GB SSD" }
+      },
+      {
+        id: 8, code: "CRYS", emblem: "gem",
+        title: "Cavaleiro de Cristal", studio: "PixelHeart Studio",
+        category: "Indie", platform: "Switch", platformLabel: "Switch / PC",
+        price: 27.90, oldPrice: 45.00, deluxeExtra: 12.00, rating: 4.9, featured: false,
+        tags: ["Metroidvania", "Steam Deck", "PT-BR"],
+        gradient: "linear-gradient(135deg, #5b21b6 0%, #be185d 100%)",
+        description: "Metroidvania preciso e desafiador desenhado quadro a quadro, com mais de 40 chefes secretos e habilidades desbloqueáveis.",
+        specs: { cpu: "Dual Core 2.4 GHz", gpu: "Integrada / OpenGL 3.3", ram: "4 GB RAM", storage: "5 GB" }
+      }
+    ];
+
+    let activeCategory = "Todos";
+    let onlyFavorites = false;
+    let currentHeroIndex = 0;
+    let heroInterval;
+    let heroPaused = false;
+    let couponApplied = false;
+    let selectedPayment = "Pix";
+
+    let cart = JSON.parse(localStorage.getItem("nx_cart")) || [];
+    let wishlist = JSON.parse(localStorage.getItem("nx_wishlist")) || [];
+    let purchasedKeys = JSON.parse(localStorage.getItem("nx_keys")) || [];
+    const heroGames = games.filter(g => g.featured);
+
+    function initPersonalBranding() {
+      document.title = `${SITE_CONFIG.storeName} — Loja de Jogos Digitais | ${SITE_CONFIG.devName}`;
+      document.getElementById("brandTitle").textContent = SITE_CONFIG.storeName;
+      document.getElementById("brandSub").textContent = `por ${SITE_CONFIG.devName}`;
+      document.getElementById("footerBrand").textContent = SITE_CONFIG.storeName;
+      document.getElementById("footerCopy").textContent = `© 2026 ${SITE_CONFIG.storeName} — Desenvolvido por ${SITE_CONFIG.devName}`;
+
+      document.getElementById("footerDevLinks").innerHTML = `
+        <li>${SITE_CONFIG.devName}</li>
+        <li style="color:var(--text-dim);">${SITE_CONFIG.devRole}</li>
+        <li><a class="footer-link" href="${SITE_CONFIG.githubUrl}" target="_blank" rel="noopener">GitHub (@SammyBe4r) &nearr;</a></li>
+        <li><a class="footer-link" href="${SITE_CONFIG.linkedinUrl}" target="_blank" rel="noopener">LinkedIn &nearr;</a></li>
+      `;
+
+      const savedTheme = localStorage.getItem("nx_theme") || SITE_CONFIG.defaultTheme;
+      setTheme(savedTheme, false);
+    }
+
+    function setTheme(themeName, notify = true) {
+      document.documentElement.setAttribute("data-theme", themeName);
+      localStorage.setItem("nx_theme", themeName);
+      document.querySelectorAll(".theme-dot").forEach(dot => {
+        dot.classList.toggle("active", dot.dataset.setTheme === themeName);
+      });
+      if (notify) showToast(`Tema alterado para: ${themeName.toUpperCase()}`);
+    }
+
+    function formatBRL(v) {
+      return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+
+    /* Hero Carousel */
+    function renderHero() {
+      const game = heroGames[currentHeroIndex];
+      const discount = Math.round(((game.oldPrice - game.price) / game.oldPrice) * 100);
+
+      document.getElementById("heroBg").style.background = game.gradient;
+      document.getElementById("heroContent").innerHTML = `
+        <div class="hero-meta">
+          <span class="pill pill-accent">${game.platformLabel}</span>
+          <span class="pill pill-rating">★ ${game.rating} • ${game.category}</span>
+          <span class="discount-tag">-${discount}% OFF</span>
+        </div>
+        <h1>${game.title}</h1>
+        <p>${game.description}</p>
+        <div class="hero-cta-row">
+          <button class="btn-primary" onclick="addToCart(${game.id}, 'Standard')">
+            Comprar por ${formatBRL(game.price)}
+          </button>
+          <button class="btn-secondary" onclick="openDetails(${game.id})">
+            Ver Edições & Requisitos
+          </button>
+        </div>
+      `;
+
+      document.getElementById("heroSideList").innerHTML = heroGames.map((g, idx) => `
+        <div class="hero-side-item ${idx === currentHeroIndex ? 'active' : ''}" onclick="setHero(${idx})">
+          <div class="hero-side-thumb" style="background: ${g.gradient}">${g.code}</div>
+          <div class="hero-side-info">
+            <h4>${g.title}</h4>
+            <span>${formatBRL(g.price)}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function startHeroTimer() {
+      clearInterval(heroInterval);
+      heroInterval = setInterval(() => {
+        if (!heroPaused) {
+          currentHeroIndex = (currentHeroIndex + 1) % heroGames.length;
+          renderHero();
+        }
+      }, 6500);
+    }
+
+    function setHero(index) {
+      currentHeroIndex = index;
+      renderHero();
+      startHeroTimer();
+    }
+
+    function pauseHero() { heroPaused = true; }
+    function resumeHero() { heroPaused = false; }
+
+    /* Filters & Games Grid */
+    function setCategory(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderGames();
+    }
+
+    function toggleWishlistFilter() {
+      onlyFavorites = !onlyFavorites;
+      document.getElementById("favFilterBtn").classList.toggle("active", onlyFavorites);
+      renderGames();
+    }
+
+    function resetAll() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("platformFilter").value = "Todas";
+      document.getElementById("sortSelect").value = "featured";
+      activeCategory = "Todos";
+      onlyFavorites = false;
+      document.getElementById("favFilterBtn").classList.remove("active");
+      document.querySelectorAll(".filter-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
+      renderGames();
+    }
+
+    function renderGames() {
+      const q = document.getElementById("searchInput").value.toLowerCase().trim();
+      const plat = document.getElementById("platformFilter").value;
+      const sort = document.getElementById("sortSelect").value;
+
+      let list = games.filter(g => {
+        const matchCat = activeCategory === "Todos" || g.category === activeCategory;
+        const matchPlat = plat === "Todas" || g.platform === plat || g.platformLabel.includes(plat);
+        const matchFav = !onlyFavorites || wishlist.includes(g.id);
+        const matchSearch = g.title.toLowerCase().includes(q) ||
+                            g.studio.toLowerCase().includes(q) ||
+                            g.category.toLowerCase().includes(q) ||
+                            g.tags.some(t => t.toLowerCase().includes(q));
+        return matchCat && matchPlat && matchFav && matchSearch;
+      });
+
+      if (sort === "price-asc") list.sort((a, b) => a.price - b.price);
+      if (sort === "price-desc") list.sort((a, b) => b.price - a.price);
+      if (sort === "rating") list.sort((a, b) => b.rating - a.rating);
+      if (sort === "discount") {
+        list.sort((a, b) => ((b.oldPrice - b.price) / b.oldPrice) - ((a.oldPrice - a.price) / a.oldPrice));
+      }
+
+      const grid = document.getElementById("gamesGrid");
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3.5rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;">
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Nenhum jogo encontrado com os filtros atuais.</p>
+            <button class="btn-secondary" onclick="resetAll()">Limpar Filtros</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = list.map((game, index) => {
+        const discount = Math.round(((game.oldPrice - game.price) / game.oldPrice) * 100);
+        const isFav = wishlist.includes(game.id);
+        return `
+          <article class="game-card" style="animation-delay: ${index * 45}ms">
+            <div class="card-cover" style="background: ${game.gradient}" onclick="openDetails(${game.id})">
+              <div class="card-cover-pattern"></div>
+              ${emblems[game.emblem] || ""}
+              <div class="card-cover-top">
+                <button class="fav-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlist(${game.id})" title="Favoritar">
+                  <svg width="15" height="15" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                </button>
+                <span class="discount-tag">-${discount}%</span>
+              </div>
+              <div class="card-cover-bottom">
+                <span class="platform-pill">${game.platformLabel}</span>
+                <span class="rating-pill">★ ${game.rating}</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="cat">${game.category}</span>
+                <span>${game.studio}</span>
+              </div>
+              <h3 class="card-title" onclick="openDetails(${game.id})">${game.title}</h3>
+              <div class="tag-row">
+                ${game.tags.map(t => `<span class="mini-tag">${t}</span>`).join("")}
+              </div>
+              <div class="card-footer">
+                <div class="price-stack">
+                  <span class="price-old">${formatBRL(game.oldPrice)}</span>
+                  <span class="price-now">${formatBRL(game.price)}</span>
+                </div>
+                <button class="add-cart-btn" onclick="addToCart(${game.id}, 'Standard')">+ Carrinho</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function toggleWishlist(id) {
+      if (wishlist.includes(id)) {
+        wishlist = wishlist.filter(x => x !== id);
+        showToast("Removido dos favoritos");
+      } else {
+        wishlist.push(id);
+        showToast("Salvo nos favoritos!");
+      }
+      localStorage.setItem("nx_wishlist", JSON.stringify(wishlist));
+      document.getElementById("favCount").textContent = wishlist.length;
+      renderGames();
+    }
+
+    /* Details Modal */
+    let detailEdition = "Standard";
+    function openDetails(id) {
+      const game = games.find(g => g.id === id);
+      if (!game) return;
+      detailEdition = "Standard";
+      renderDetailsModal(game);
+      document.getElementById("detailsModal").classList.add("open");
+      document.getElementById("overlay").classList.add("open");
+    }
+
+    function selectEdition(id, ed) {
+      detailEdition = ed;
+      renderDetailsModal(games.find(g => g.id === id));
+    }
+
+    function renderDetailsModal(game) {
+      const finalPrice = detailEdition === "Deluxe" ? game.price + game.deluxeExtra : game.price;
+      document.getElementById("detailsBody").innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+          <div>
+            <span class="pill pill-accent" style="margin-bottom:0.4rem; display:inline-block;">${game.category} • ${game.platformLabel}</span>
+            <h2 style="font-size:1.5rem;">${game.title}</h2>
+            <span style="font-size:0.8rem; color:var(--text-dim);">Desenvolvido por ${game.studio} • Avaliação ★ ${game.rating}/5.0</span>
+          </div>
+          <button class="close-btn" onclick="closeAll()">&times;</button>
+        </div>
+
+        <div style="height:110px; border-radius:12px; background:${game.gradient}; display:flex; align-items:center; justify-content:space-between; padding:1.25rem; margin-bottom:1rem; border:1px solid rgba(255,255,255,0.1);">
+          <div>
+            <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:1px; opacity:0.85;">Chave Oficial Digital</span>
+            <div style="font-size:1.35rem; font-weight:800;">${game.code}-EDITION</div>
+          </div>
+          <span class="rating-pill" style="font-size:0.82rem; padding:0.35rem 0.7rem;">Ativação Brasil / Global</span>
+        </div>
+
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1rem;">${game.description}</p>
+
+        <span style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-dim);">Escolha a Edição:</span>
+        <div class="edition-grid">
+          <div class="edition-card ${detailEdition === 'Standard' ? 'selected' : ''}" onclick="selectEdition(${game.id}, 'Standard')">
+            <div style="font-weight:700; font-size:0.9rem;">Edição Padrão</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); margin:0.2rem 0 0.4rem;">Jogo base completo</div>
+            <strong style="color:var(--accent);">${formatBRL(game.price)}</strong>
+          </div>
+          <div class="edition-card ${detailEdition === 'Deluxe' ? 'selected' : ''}" onclick="selectEdition(${game.id}, 'Deluxe')">
+            <div style="font-weight:700; font-size:0.9rem;">Edição Deluxe</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); margin:0.2rem 0 0.4rem;">Jogo base + Season Pass + Skins</div>
+            <strong style="color:var(--accent);">${formatBRL(game.price + game.deluxeExtra)}</strong>
+          </div>
+        </div>
+
+        <span style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-dim);">Requisitos Recomendados (PC):</span>
+        <div class="specs-box">
+          <div><strong>CPU:</strong> ${game.specs.cpu}</div>
+          <div><strong>GPU:</strong> ${game.specs.gpu}</div>
+          <div><strong>Memória:</strong> ${game.specs.ram}</div>
+          <div><strong>Armazenamento:</strong> ${game.specs.storage}</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.4rem;">
+          <div>
+            <span style="font-size:0.75rem; color:var(--text-dim); display:block;">Total da edição</span>
+            <strong style="font-size:1.45rem;">${formatBRL(finalPrice)}</strong>
+          </div>
+          <button class="btn-primary" onclick="addToCart(${game.id}, '${detailEdition}'); closeAll();">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      `;
+    }
+
+    /* Cart */
+    function addToCart(gameId, edition) {
+      const key = `${gameId}-${edition}`;
+      const existing = cart.find(item => item.key === key);
+      if (existing) existing.qty += 1;
+      else cart.push({ key, gameId, edition, qty: 1 });
+      saveCart();
+      showToast(`${edition === 'Deluxe' ? 'Edição Deluxe' : 'Jogo'} adicionado ao carrinho`);
+    }
+
+    function updateQty(key, delta) {
+      const item = cart.find(i => i.key === key);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.key !== key);
+      saveCart();
+    }
+
+    function getCartTotals() {
+      const subtotal = cart.reduce((sum, item) => {
+        const g = games.find(x => x.id === item.gameId);
+        if (!g) return sum;
+        const unit = item.edition === "Deluxe" ? g.price + g.deluxeExtra : g.price;
+        return sum + unit * item.qty;
+      }, 0);
+      const discount = couponApplied ? subtotal * 0.10 : 0;
+      return { subtotal, discount, total: subtotal - discount };
+    }
+
+    function saveCart() {
+      localStorage.setItem("nx_cart", JSON.stringify(cart));
+      document.getElementById("cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0);
+
+      const body = document.getElementById("cartBody");
+      if (cart.length === 0) {
+        body.innerHTML = `<div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);">Seu carrinho está vazio.<br><span style="font-size:0.8rem;">Explore o catálogo e adicione seus jogos.</span></div>`;
+      } else {
+        body.innerHTML = cart.map(item => {
+          const g = games.find(x => x.id === item.gameId);
+          if (!g) return "";
+          const unit = item.edition === "Deluxe" ? g.price + g.deluxeExtra : g.price;
+          return `
+            <div class="cart-item">
+              <div class="cart-thumb" style="background: ${g.gradient}">${g.code}</div>
+              <div class="cart-info">
+                <h4>${g.title}</h4>
+                <span class="edition-label">${item.edition} • ${g.platformLabel}</span>
+                <span class="cart-price">${formatBRL(unit * item.qty)}</span>
+              </div>
+              <div class="qty-box">
+                <button class="qty-btn" onclick="updateQty('${item.key}', -1)">-</button>
+                <span style="font-size:0.85rem; min-width:18px; text-align:center;">${item.qty}</span>
+                <button class="qty-btn" onclick="updateQty('${item.key}', 1)">+</button>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      const { subtotal, discount, total } = getCartTotals();
+      document.getElementById("subtotalText").textContent = formatBRL(subtotal);
+      document.getElementById("discountRow").style.display = couponApplied ? "flex" : "none";
+      document.getElementById("discountText").textContent = `- ${formatBRL(discount)}`;
+      document.getElementById("totalText").textContent = formatBRL(total);
+    }
+
+    function applyCoupon() {
+      const code = document.getElementById("couponInput").value.trim().toUpperCase();
+      if (["KINETIC10", "PORTFOLIO10", "NEXUS10", "GAMER10"].includes(code)) {
+        couponApplied = true;
+        saveCart();
+        showToast("Cupom aplicado: 10% de desconto!");
+      } else {
+        showToast("Cupom inválido. Tente KINETIC10.");
+      }
+    }
+
+    function toggleCart(open) {
+      document.getElementById("cartDrawer").classList.toggle("open", open);
+      document.getElementById("overlay").classList.toggle("open", open);
+    }
+
+    /* Checkout */
+    function openCheckout() {
+      if (cart.length === 0) {
+        showToast("Adicione ao menos um jogo antes de finalizar.");
+        return;
+      }
+      document.getElementById("cartDrawer").classList.remove("open");
+      renderCheckoutForm();
+      document.getElementById("checkoutModal").classList.add("open");
+      document.getElementById("overlay").classList.add("open");
+    }
+
+    function setPayMethod(method) {
+      selectedPayment = method;
+      renderCheckoutForm();
+    }
+
+    function renderCheckoutForm() {
+      const { total } = getCartTotals();
+      document.getElementById("checkoutBody").innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+          <h3>Finalizar Pedido</h3>
+          <button class="close-btn" onclick="closeAll()">&times;</button>
+        </div>
+
+        <form onsubmit="processOrder(event)">
+          <div class="form-group">
+            <label>E-mail para recebimento das chaves</label>
+            <input type="email" id="checkoutEmail" required placeholder="nome@exemplo.com" />
+          </div>
+
+          <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-muted); margin-bottom:0.4rem;">Método de Pagamento (Simulação)</label>
+          <div class="payment-tabs">
+            <div class="pay-tab ${selectedPayment === 'Pix' ? 'active' : ''}" onclick="setPayMethod('Pix')">Pix Instantâneo</div>
+            <div class="pay-tab ${selectedPayment === 'Cartão' ? 'active' : ''}" onclick="setPayMethod('Cartão')">Cartão de Crédito</div>
+          </div>
+
+          ${selectedPayment === 'Pix' ? `
+            <div style="background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:1rem; display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" style="flex-shrink:0; background:var(--accent-soft); padding:8px; border-radius:8px;">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zm4 4h3v3h-3zm-4 2h2m4-6v2"/>
+              </svg>
+              <div style="font-size:0.8rem; color:var(--text-muted);">
+                <strong style="color:#fff; display:block; margin-bottom:0.2rem;">Aprovação imediata via Pix</strong>
+                Ao confirmar, suas chaves de ativação são geradas na hora e salvas na sua biblioteca.
+              </div>
+            </div>
+          ` : `
+            <div class="form-group">
+              <label>Número do Cartão (Simulação)</label>
+              <input type="text" required placeholder="4532 •••• •••• 8891" maxlength="19" />
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+              <div class="form-group"><label>Validade</label><input type="text" required placeholder="12/29" maxlength="5" /></div>
+              <div class="form-group"><label>CVV</label><input type="text" required placeholder="123" maxlength="4" /></div>
+            </div>
+          `}
+
+          <div style="background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:0.9rem 1rem; display:flex; justify-content:space-between; align-items:center; margin-bottom:1.1rem;">
+            <span style="color:var(--text-muted); font-size:0.9rem;">Total do pedido:</span>
+            <strong style="font-size:1.25rem; color:var(--accent);">${formatBRL(total)}</strong>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%;">Confirmar Pagamento</button>
+        </form>
+      `;
+    }
+
+    function generateKey() {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      const seg = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+      return `${seg()}-${seg()}-${seg()}-${seg()}`;
+    }
+
+    function processOrder(e) {
+      e.preventDefault();
+      const email = document.getElementById("checkoutEmail").value;
+      const newKeys = [];
+
+      cart.forEach(item => {
+        const g = games.find(x => x.id === item.gameId);
+        if (!g) return;
+        for (let i = 0; i < item.qty; i++) {
+          newKeys.push({
+            title: g.title, edition: item.edition,
+            platform: g.platformLabel, key: generateKey(),
+            date: new Date().toLocaleDateString("pt-BR")
+          });
+        }
+      });
+
+      purchasedKeys = [...newKeys, ...purchasedKeys];
+      localStorage.setItem("nx_keys", JSON.stringify(purchasedKeys));
+      document.getElementById("keysCount").textContent = purchasedKeys.length;
+
+      cart = [];
+      couponApplied = false;
+      document.getElementById("couponInput").value = "";
+      saveCart();
+
+      document.getElementById("checkoutBody").innerHTML = `
+        <div style="text-align:center; margin-bottom:1.25rem;">
+          <div style="width:52px; height:52px; border-radius:50%; background:rgba(16,185,129,0.15); color:var(--success); display:inline-flex; align-items:center; justify-content:center; margin-bottom:0.75rem;">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <h3>Pagamento Confirmado!</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Chaves liberadas para <strong>${email}</strong>:</p>
+        </div>
+        <div style="max-height:240px; overflow-y:auto; margin-bottom:1.25rem;">
+          ${newKeys.map(k => `
+            <div class="key-card">
+              <div>
+                <div style="font-size:0.85rem; font-weight:700;">${k.title} (${k.edition})</div>
+                <div style="font-size:0.72rem; color:var(--text-dim); margin-bottom:0.2rem;">${k.platform}</div>
+                <div class="key-code">${k.key}</div>
+              </div>
+              <button class="copy-btn" onclick="copyText('${k.key}')">Copiar</button>
+            </div>
+          `).join("")}
+        </div>
+        <button class="btn-primary" style="width:100%;" onclick="closeAll()">Concluir</button>
+      `;
+    }
+
+    function openKeysModal() {
+      document.getElementById("keysBody").innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+          <h3>Minhas Chaves Digitais</h3>
+          <button class="close-btn" onclick="closeAll()">&times;</button>
+        </div>
+        ${purchasedKeys.length === 0 ? `
+          <p style="text-align:center; padding:2.5rem 1rem; color:var(--text-muted); font-size:0.9rem;">
+            Nenhuma chave adquirida ainda. Adicione um jogo ao carrinho e finalize a simulação de compra para gerar suas chaves aqui.
+          </p>
+        ` : `
+          <div style="max-height:360px; overflow-y:auto;">
+            ${purchasedKeys.map(k => `
+              <div class="key-card">
+                <div>
+                  <div style="font-size:0.86rem; font-weight:700;">${k.title} (${k.edition})</div>
+                  <div style="font-size:0.72rem; color:var(--text-dim); margin-bottom:0.25rem;">${k.platform} • Adquirido em ${k.date}</div>
+                  <div class="key-code">${k.key}</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('${k.key}')">Copiar</button>
+              </div>
+            `).join("")}
+          </div>
+        `}
+      `;
+      document.getElementById("keysModal").classList.add("open");
+      document.getElementById("overlay").classList.add("open");
+    }
+
+    /* Portfolio Case Study Modal */
+    function openAboutModal() {
+      document.getElementById("aboutBody").innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.15rem;">
+          <div>
+            <span class="pill pill-accent" style="margin-bottom:0.35rem; display:inline-block;">Portfólio • Case Study</span>
+            <h3>Arquitetura do Projeto</h3>
+          </div>
+          <button class="close-btn" onclick="closeAll()">&times;</button>
+        </div>
+
+        <div class="dev-card">
+          <div style="display:flex; align-items:center; gap:0.9rem;">
+            <div class="dev-avatar">${SITE_CONFIG.devInitials}</div>
+            <div>
+              <strong style="font-size:1.02rem; display:block;">${SITE_CONFIG.devName}</strong>
+              <span style="font-size:0.8rem; color:var(--text-muted);">${SITE_CONFIG.devRole}</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <a href="${SITE_CONFIG.githubUrl}" target="_blank" rel="noopener" class="btn-secondary" style="padding:0.45rem 0.85rem; font-size:0.8rem; text-decoration:none;">GitHub</a>
+            <a href="${SITE_CONFIG.linkedinUrl}" target="_blank" rel="noopener" class="btn-primary" style="padding:0.45rem 0.85rem; font-size:0.8rem; text-decoration:none;">LinkedIn</a>
+          </div>
+        </div>
+
+        <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">
+          A <strong>${SITE_CONFIG.storeName}</strong> é uma aplicação de e-commerce de jogos digitais projetada para demonstrar domínio de interfaces modernas, experiência do usuário (UX) e gerenciamento de estado reativo em JavaScript puro, sem dependência de bibliotecas externas.
+        </p>
+
+        <div class="tech-stack-grid">
+          <div class="tech-item">
+            <strong>Design System & Temas</strong>
+            Variables CSS com 4 paletas dinâmicas em tempo real e contraste acessível (WCAG).
+          </div>
+          <div class="tech-item">
+            <strong>Estado & Persistência</strong>
+            Carrinho com múltiplas edições, favoritos e biblioteca de chaves salvos via <code>localStorage</code>.
+          </div>
+          <div class="tech-item">
+            <strong>Busca & Filtragem Combinada</strong>
+            Filtragem simultânea por categoria, plataforma, tags, busca instantânea e ordenação.
+          </div>
+          <div class="tech-item">
+            <strong>Atalhos & Micro-interações</strong>
+            Atalho <code>/</code> na busca, <code>Esc</code> nos modais, carrossel com pause-on-hover e gerador de keys.
+          </div>
+        </div>
+
+        <button class="btn-primary" style="width:100%;" onclick="closeAll()">Voltar para a Loja</button>
+      `;
+      document.getElementById("aboutModal").classList.add("open");
+      document.getElementById("overlay").classList.add("open");
+    }
+
+    function copyText(txt, customMsg = "Chave copiada para a área de transferência!") {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(() => showToast(customMsg));
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = txt;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showToast(customMsg);
+      }
+    }
+
+    function closeAll() {
+      ["cartDrawer", "detailsModal", "checkoutModal", "keysModal", "aboutModal", "overlay"].forEach(id => {
+        document.getElementById(id).classList.remove("open");
+      });
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2600);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
+        e.preventDefault();
+        document.getElementById("searchInput").focus();
+      }
+      if (e.key === "Escape") closeAll();
+    });
+
+    /* Init */
+    initPersonalBranding();
+    document.getElementById("favCount").textContent = wishlist.length;
+    document.getElementById("keysCount").textContent = purchasedKeys.length;
+    renderHero();
+    startHeroTimer();
+    renderGames();
+    saveCart();
+  </script>
+</body>
+</html>
